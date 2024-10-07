@@ -24,7 +24,7 @@
     "@react-admin/ra-search": "file:ra-enterprise-packages/react-admin-ra-search-4.5.3.tgz",
     "@react-admin/ra-tour": "file:ra-enterprise-packages/react-admin-ra-tour-4.1.0.tgz",
     "@react-admin/ra-tree": "file:ra-enterprise-packages/react-admin-ra-tree-4.4.9.tgz",
-    "@source-repo/msgrpc": "file:../project-builder/backends/packages/msgrpc/source-repo-msgrpc-0.1.2.tgz",
+    "@source-repo/msgrpc": "file:source-repo-msgrpc-0.1.2.tgz",
     "@types/uuid": "^10.0.0",
     "bson": "^6.8.0",
     "bson-objectid": "^2.0.4",
