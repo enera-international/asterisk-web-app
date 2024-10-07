@@ -16,6 +16,7 @@ export default tseslint.config(
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
+      'plugin:unicorn/recommended': 'unicorn',
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -23,6 +24,12 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      'unicorn/filename-case': [
+      'warn', // Or 'error' if you want it to be stricter
+      {
+        case: 'kebabCase', // Or 'camelCase', 'PascalCase', 'snake_case' depending on your convention
+      },
+    ],
     },
   },
 )

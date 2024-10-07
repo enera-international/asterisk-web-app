@@ -212,6 +212,6 @@ export const useRpcDataProvider = (url: string = '', path?: string) => {
         }
         return () => {
         }
-    }, [url, isLoading, msgRpc])
+    }, [url, isLoading, msgRpc, path])
     return { dataProvider, isLoading, error }
 }

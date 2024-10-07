@@ -2,7 +2,7 @@ import { Admin } from "@react-admin/ra-enterprise";
 //import jsonServerProvider from "ra-data-json-server";
 //import { webSocketDataProvider } from "../dataProvider.js";
 //import { authProvider } from "./authProvider.js";
-import { UserCreate, UserEdit, UserList, UserShow } from "../Users.js";
+import { UserCreate, UserEdit, UserList, UserShow } from "../users.js";
 import { useReactAdminRpcDataProvider } from "../shared/hooks/useReactAdminRpcDataProvider.js";
 import { CallList, CallEdit, CallCreate, CallShow } from "../CallSessions.js";
 import { ContextList, ContextEdit, ContextCreate, ContextShow } from "../Contexts.js";
