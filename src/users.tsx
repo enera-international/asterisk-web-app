@@ -1,45 +1,57 @@
-import React from 'react';
-import { List, Datagrid, TextField, EmailField, Create, required, SimpleForm, TextInput, Show, SimpleShowLayout, Edit } from 'react-admin';
+import { List, Datagrid, TextField, BooleanField, EditButton, DeleteButton, Create, SimpleForm, TextInput, BooleanInput, SelectInput, Edit, Show, SimpleShowLayout } from 'react-admin';
 
-export const UserList: React.FC = (props) => (
+export const UserList = (props) => (
     <List {...props}>
-        <Datagrid rowClick="edit">
-            <TextField source="id" />
-            <TextField source="name" />
+        <Datagrid>
             <TextField source="username" />
-            <EmailField source="email" />
+            <TextField source="phoneNumber" />
+            <TextField source="email" />
+            <BooleanField source="isActive" />
+            <EditButton />
+            <DeleteButton />
         </Datagrid>
     </List>
 );
 
+export const UserEdit = (props) => (
+    <Edit {...props}>
+        <SimpleForm>
+            <TextInput source="username" />
+            <TextInput source="phoneNumber" />
+            <TextInput source="email" />
+            <BooleanInput source="isActive" />
+            <SelectInput source="role" choices={[
+                { id: 'admin', name: 'Admin' },
+                { id: 'user', name: 'User' }
+            ]} />
+        </SimpleForm>
+    </Edit>
+);
 
-export const UserCreate: React.FC = (props) => (
+export const UserCreate = (props) => (
     <Create {...props}>
         <SimpleForm>
-            <TextInput source="name" validate={required()} />
-            <TextInput source="username" validate={required()} />
-            <TextInput source="email" validate={required()} />
+            <TextInput source="username" />
+            <TextInput source="password" />
+            <TextInput source="phoneNumber" />
+            <TextInput source="email" />
+            <BooleanInput source="isActive" defaultValue={true} />
+            <SelectInput source="role" choices={[
+                { id: 'admin', name: 'Admin' },
+                { id: 'user', name: 'User' }
+            ]} />
         </SimpleForm>
     </Create>
 );
 
-export const UserShow: React.FC = (props) => (
+export const UserShow = (props) => (
     <Show {...props}>
         <SimpleShowLayout>
-            <TextField source="id" />
-            <TextField source="name" />
             <TextField source="username" />
-            <EmailField source="email" />
+            <TextField source="phoneNumber" />
+            <TextField source="email" />
+            <BooleanField source="isActive" />
+            <TextField source="role" />
         </SimpleShowLayout>
     </Show>
-);
-
-export const UserEdit: React.FC = (props) => (
-    <Edit {...props}>
-        <SimpleForm>
-            <TextInput source="name" validate={required()} />
-            <TextInput source="username" validate={required()} />
-            <TextInput source="email" validate={required()} />
-        </SimpleForm>
-    </Edit>
 );

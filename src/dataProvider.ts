@@ -63,7 +63,7 @@ export const webSocketDataProvider: DataProvider = {
         params: GetManyParams
     ): Promise<GetListResult<RecordType>> => {
         return new Promise((resolve, reject) => {
-            socket.emit('fetch', { collection: resource, filter: { _id: { $in: params.ids.map(id => new ObjectId(id)) } } });
+            socket.emit('fetch', { collection: resource, filter: { _id: { $in: params.ids.map(id => new ObjectId(id as string)) } } });
 
             socket.on('data', (data: any[]) => {
                 resolve({ data: data.map(item => ({ ...item, id: item._id })) as RecordType[] });
@@ -137,7 +137,7 @@ export const webSocketDataProvider: DataProvider = {
         return new Promise((resolve, reject) => {
             socket.emit('updateMany', {
                 collection: resource,
-                ids: params.ids.map(id => new ObjectId(id)),
+                ids: params.ids.map(id => new ObjectId(id as string)),
                 data: params.data,
             });
 
