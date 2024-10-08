@@ -2,8 +2,9 @@ import { List, Datagrid, TextField, BooleanField, EditButton, DeleteButton, Crea
 
 export const UserList = (props) => (
     <List {...props}>
-        <Datagrid>
+        <Datagrid rowClick="show">
             <TextField source="username" />
+            <TextField source="fullName" />
             <TextField source="phoneNumber" />
             <TextField source="email" />
             <BooleanField source="isActive" />
@@ -17,6 +18,7 @@ export const UserEdit = (props) => (
     <Edit {...props}>
         <SimpleForm>
             <TextInput source="username" />
+            <TextInput source="fullName" />
             <TextInput source="phoneNumber" />
             <TextInput source="email" />
             <BooleanInput source="isActive" />
@@ -32,6 +34,7 @@ export const UserCreate = (props) => (
     <Create {...props}>
         <SimpleForm>
             <TextInput source="username" />
+            <TextInput source="fullName" />
             <TextInput source="password" />
             <TextInput source="phoneNumber" />
             <TextInput source="email" />
@@ -48,6 +51,7 @@ export const UserShow = (props) => (
     <Show {...props}>
         <SimpleShowLayout>
             <TextField source="username" />
+            <TextField source="fullName" />
             <TextField source="phoneNumber" />
             <TextField source="email" />
             <BooleanField source="isActive" />

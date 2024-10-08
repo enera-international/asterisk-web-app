@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { MsgRpcService } from "../services/MsgRpcService";
-import { MsgRpcContext } from "../contexts/MsgRpcContext";
+import { MsgRpcService } from "../services/MsgRpcService.js";
+import { MsgRpcContext } from "../contexts/MsgRpcContext.js";
 
 export const useMsgRpc = (): MsgRpcService => {
   const context = useContext(MsgRpcContext);

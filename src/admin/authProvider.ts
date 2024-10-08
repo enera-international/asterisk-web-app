@@ -1,37 +1,19 @@
 import { AuthProvider, UserIdentity } from "react-admin";
+import { MsgRpcService } from "../shared/services/MsgRpcService.js"
 
 export const authProvider: AuthProvider = {
     login: async ({ username, password }) => {
-        const postBody = {
-            "strategy": "local",
-            "email": username,
-            password
-        }
+        localStorage.removeItem('auth');
+        const msgRpc = await MsgRpcService.getInstance()
         const authUrl = import.meta.env.VITE_AUTH_API_URL || 'http://localhost:3001/'
-        const request = new Request(authUrl + 'authentication', {
-            method: 'POST',
-            body: JSON.stringify(postBody),
-            headers: new Headers({ 'Content-Type': 'application/json' }),
-        });
-        let response: Response | undefined
-        try {
-            response = await fetch(request)
-            if (response.status < 200 || response.status >= 300) {
-                throw new Error(response.statusText);
-            }
-            const auth = await response.json()
-            localStorage.setItem('auth', JSON.stringify(auth));
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (e) {
-            if (response && response.status === 400) {
-                const errorBody = (await response.json()) as { message: string }
-                if (errorBody.message === 'validation failed')
-                    throw new Error('Invalid email or password')
-                else
-                    throw new Error(errorBody.message)
-            } else
-                throw new Error('Network error')
+        const client = await msgRpc.getMsgRpcClient(authUrl, 'eneraWebClient')
+        const authClient = (await client.api('authentication', 'app.rapidreach')).proxy as { authenticate: (username: string, password: string) => Promise<any> }
+        const response = await authClient.authenticate(username, password)
+        if (response?.accessToken) {
+            localStorage.setItem('auth', JSON.stringify({ accessToken: response.accessToken, id: response.user.id, fullName: response.user.fullName }))
+            return Promise.resolve()
         }
+        return Promise.reject()
     },
     logout: () => {
         localStorage.removeItem('auth');

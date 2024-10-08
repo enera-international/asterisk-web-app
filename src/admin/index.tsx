@@ -1,10 +1,7 @@
 import { Admin } from "@react-admin/ra-enterprise";
-//import jsonServerProvider from "ra-data-json-server";
-//import { webSocketDataProvider } from "../dataProvider.js";
-//import { authProvider } from "./authProvider.js";
+import { authProvider } from "./authProvider.js";
 import { UserCreate, UserEdit, UserList, UserShow } from "../users.js";
 import { useReactAdminRpcDataProvider } from "../shared/hooks/useReactAdminRpcDataProvider.js";
-import { CallList, CallEdit, CallCreate, CallShow } from "../CallSessions.js";
 import { ContextList, ContextEdit, ContextCreate, ContextShow } from "../Contexts.js";
 import { DialPlanList, DialPlanEdit, DialPlanCreate, DialPlanShow } from "../DialPlans.js";
 import { TrunkList, TrunkEdit, TrunkCreate, TrunkShow } from "../Trunks.js";
@@ -13,11 +10,15 @@ import { myDarkTheme, myLightTheme } from "../shared/layout/MyTheme.js";
 
 import GroupIcon from '@mui/icons-material/Group';
 import SettingsInputAntennaIcon from '@mui/icons-material/SettingsInputAntenna';
-import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import SettingsPhoneIcon from '@mui/icons-material/SettingsPhone';
+import ApiIcon from '@mui/icons-material/Api';
 import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import Dashboard from "../Dashboard.js";
-import { Resource } from "react-admin";
+import { CustomRoutes, Resource } from "react-admin";
+import { ClientList, ClientEdit, ClientCreate, ClientShow } from "../clients.js";
+import { Route } from "react-router-dom";
+import { PreferencesEdit } from "../Preferences.js";
+import CustomUserMenu from "../UserMenu.js";
 
 //const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
 //const dataProvider = webSocketDataProvider
@@ -26,52 +27,58 @@ const apiUrl = (import.meta.env.VITE_PROJECT_API_URL !== undefined) ? import.met
 const App = () => {
   const dataProvider = useReactAdminRpcDataProvider({ url: apiUrl, path: import.meta.env.VITE_PROJECT_SOCKETIO_PATH })
   return (
-    <Admin 
-      dashboard={Dashboard} 
-      dataProvider={dataProvider} 
+    <Admin
+      authProvider={authProvider}
+      userMenu={<CustomUserMenu />}
+      dashboard={Dashboard}
+      dataProvider={dataProvider}
       lightTheme={myLightTheme}
       darkTheme={myDarkTheme}
       layout={MyLayout}>
+      <CustomRoutes>
+        <Route path="/preferences" element={<PreferencesEdit />} />
+      </CustomRoutes>
       <Resource
-            name="users"
-            list={UserList}
-            edit={UserEdit}
-            create={UserCreate}
-            show={UserShow}
-            icon={GroupIcon}
-        />
-        <Resource
-            name="trunks"
-            list={TrunkList}
-            edit={TrunkEdit}
-            create={TrunkCreate}
-            show={TrunkShow}
-            icon={SettingsInputAntennaIcon}
-        />
-        <Resource
-            name="calls"
-            list={CallList}
-            edit={CallEdit}
-            create={CallCreate}
-            show={CallShow}
-            icon={PhoneInTalkIcon}
-        />
-        <Resource
-            name="dialplans"
-            list={DialPlanList}
-            edit={DialPlanEdit}
-            create={DialPlanCreate}
-            show={DialPlanShow}
-            icon={SettingsPhoneIcon}
-        />
-        <Resource
-            name="contexts"
-            list={ContextList}
-            edit={ContextEdit}
-            create={ContextCreate}
-            show={ContextShow}
-            icon={SwitchAccountIcon}
-        />
+        name="users"
+        list={UserList}
+        edit={UserEdit}
+        create={UserCreate}
+        show={UserShow}
+        icon={GroupIcon}
+      />
+      <Resource
+        name="clients"
+        options={{ label: 'API Clients' }}
+        list={ClientList}
+        edit={ClientEdit}
+        create={ClientCreate}
+        show={ClientShow}
+        icon={ApiIcon}
+      />
+      <Resource
+        name="trunks"
+        list={TrunkList}
+        edit={TrunkEdit}
+        create={TrunkCreate}
+        show={TrunkShow}
+        icon={SettingsInputAntennaIcon}
+      />
+      <Resource
+        name="dialplans"
+        list={DialPlanList}
+        edit={DialPlanEdit}
+        create={DialPlanCreate}
+        show={DialPlanShow}
+        icon={SettingsPhoneIcon}
+      />
+      <Resource
+        name="contexts"
+        list={ContextList}
+        edit={ContextEdit}
+        create={ContextCreate}
+        show={ContextShow}
+        icon={SwitchAccountIcon}
+      />
     </Admin>
   );
 };
